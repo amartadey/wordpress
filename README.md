@@ -14,22 +14,22 @@ All default WordPress themes (Twenty Twenty-*) are removed. The `wp-content/them
 
 ## How to get the zip
 
-1. Go to the **Releases** tab of this repository.
-2. Open the latest release (e.g. `v6.x.x`).
-3. Download `wordpress-custom-x.x.x.zip` from the release assets.
-
-To always fetch the latest release asset programmatically:
+### Always-latest link (like wordpress.org/latest.zip)
 
 ```
-https://github.com/YOUR_USERNAME/YOUR_REPO/releases/latest/download/wordpress-custom-REPLACE_VERSION.zip
+https://github.com/amartadey/wordpress/releases/latest/download/wordpress-custom-latest.zip
 ```
 
-Or use the GitHub API to find the current latest version:
+This URL permanently redirects to the latest build. Bookmark it, use it in scripts, or share it — it never changes.
 
-```bash
-curl -s https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/releases/latest \
-  | python3 -c "import sys, json; r=json.load(sys.stdin); print(r['assets'][0]['browser_download_url'])"
-```
+### Specific version
+
+All versions are kept under the [Releases](https://github.com/amartadey/wordpress/releases) tab. Each release contains two assets:
+
+| File | Purpose |
+|---|---|
+| `wordpress-custom-x.x.x.zip` | Versioned archive |
+| `wordpress-custom-latest.zip` | Fixed-name alias (same file) |
 
 ## Build schedule
 

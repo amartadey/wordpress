@@ -75,16 +75,17 @@ jobs:
           curl -fsSL "$URL" -o secure-custom-fields.zip
           unzip -q secure-custom-fields.zip -d wordpress/wp-content/plugins/
 
-      - name: Create release zip
+      - name: Create release zips
         if: steps.check.outputs.exists == 'false'
         id: zip
         run: |
           ZIP="wordpress-custom-${{ steps.wp_version.outputs.version }}.zip"
           (cd wordpress && zip -r -q "../$ZIP" .)
+          cp "$ZIP" wordpress-custom-latest.zip
           echo "name=$ZIP" >> "$GITHUB_OUTPUT"
-          echo "Created $ZIP ($(du -sh "../$ZIP" | cut -f1))"
+          echo "Created $ZIP ($(du -sh "$ZIP" | cut -f1))"
 
-      - name: Create GitHub Release and upload asset
+      - name: Create GitHub Release and upload assets
         if: steps.check.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -93,4 +94,5 @@ jobs:
             --repo "$GITHUB_REPOSITORY" \
             --title "WordPress Custom v${{ steps.wp_version.outputs.version }}" \
             --notes "Custom WordPress v${{ steps.wp_version.outputs.version }} — plugins: aam-wp-migration, classic-editor, secure-custom-fields. All default themes and bundled plugins removed." \
-            "${{ steps.zip.outputs.name }}"
+            "${{ steps.zip.outputs.name }}" \
+            "wordpress-custom-latest.zip"
