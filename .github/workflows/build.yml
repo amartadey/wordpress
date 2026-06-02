@@ -1,0 +1,96 @@
+name: Build Custom WordPress
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download and extract WordPress
+        run: |
+          curl -fsSL https://wordpress.org/latest.zip -o wordpress-latest.zip
+          unzip -q wordpress-latest.zip
+
+      - name: Read WordPress version
+        id: wp_version
+        run: |
+          VERSION=$(grep "\$wp_version = " wordpress/wp-includes/version.php \
+            | sed "s/.*'\(.*\)'.*/\1/")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Detected WordPress $VERSION"
+
+      - name: Check if release already exists
+        id: check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="v${{ steps.wp_version.outputs.version }}"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Release $TAG already exists — skipping."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "Release $TAG not found — proceeding with build."
+          fi
+
+      - name: Remove default plugins and themes
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          # Remove all plugin folders and loose plugin files (keep index.php)
+          find wordpress/wp-content/plugins -mindepth 1 -maxdepth 1 ! -name 'index.php' -exec rm -rf {} +
+          # Remove everything from themes, then add a blank index.php
+          find wordpress/wp-content/themes -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          printf '<?php // Silence is golden.\n' > wordpress/wp-content/themes/index.php
+
+      - name: Install aam-wp-migration
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          curl -fsSL \
+            "https://raw.githubusercontent.com/amartadey/Some-Tools/main/php-tools/aam-wp-migration.zip" \
+            -o aam-wp-migration.zip
+          unzip -q aam-wp-migration.zip -d wordpress/wp-content/plugins/
+
+      - name: Install classic-editor
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          URL=$(curl -fsSL \
+            "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=classic-editor" \
+            | python3 -c "import sys, json; print(json.load(sys.stdin)['download_link'])")
+          curl -fsSL "$URL" -o classic-editor.zip
+          unzip -q classic-editor.zip -d wordpress/wp-content/plugins/
+
+      - name: Install secure-custom-fields
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          URL=$(curl -fsSL \
+            "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=secure-custom-fields" \
+            | python3 -c "import sys, json; print(json.load(sys.stdin)['download_link'])")
+          curl -fsSL "$URL" -o secure-custom-fields.zip
+          unzip -q secure-custom-fields.zip -d wordpress/wp-content/plugins/
+
+      - name: Create release zip
+        if: steps.check.outputs.exists == 'false'
+        id: zip
+        run: |
+          ZIP="wordpress-custom-${{ steps.wp_version.outputs.version }}.zip"
+          (cd wordpress && zip -r -q "../$ZIP" .)
+          echo "name=$ZIP" >> "$GITHUB_OUTPUT"
+          echo "Created $ZIP ($(du -sh "../$ZIP" | cut -f1))"
+
+      - name: Create GitHub Release and upload asset
+        if: steps.check.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "v${{ steps.wp_version.outputs.version }}" \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "WordPress Custom v${{ steps.wp_version.outputs.version }}" \
+            --notes "Custom WordPress v${{ steps.wp_version.outputs.version }} — plugins: aam-wp-migration, classic-editor, secure-custom-fields. All default themes and bundled plugins removed." \
+            "${{ steps.zip.outputs.name }}"
