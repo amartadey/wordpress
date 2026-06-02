@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WGH Auto Setup
- * Description: Activates the wgh-starter theme and bundled plugins on first WordPress run, then removes itself.
+ * Description: First-run setup: activates wgh-starter theme and bundled plugins, deletes the default Hello World post, disables comments site-wide. Self-removes after completion.
  */
 
 add_action( 'init', 'wgh_auto_setup', 1 );
@@ -50,7 +50,23 @@ function wgh_auto_setup() {
 		update_option( 'active_plugins', array_values( $active ) );
 	}
 
-	// ── 3. Mark done, then self-delete ────────────────────────────────────────
+	// ── 3. Delete default "Hello World" post and its comment ─────────────────
+	$hello = get_posts( [
+		'title'          => 'Hello world!',
+		'post_type'      => 'post',
+		'post_status'    => 'any',
+		'posts_per_page' => 1,
+		'fields'         => 'ids',
+	] );
+	if ( ! empty( $hello ) ) {
+		wp_delete_post( $hello[0], true );
+	}
+
+	// ── 4. Disable comments site-wide by default ──────────────────────────────
+	update_option( 'default_comment_status', 'closed' );
+	update_option( 'default_ping_status',    'closed' );
+
+	// ── 5. Mark done, then self-delete ────────────────────────────────────────
 	update_option( 'wgh_auto_setup_done', '1' );
 
 	if ( is_writable( __FILE__ ) ) {
