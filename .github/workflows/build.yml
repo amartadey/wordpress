@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download and extract WordPress
         run: |
           curl -fsSL https://wordpress.org/latest.zip -o wordpress-latest.zip
@@ -48,6 +51,23 @@ jobs:
           # Remove everything from themes, then add a blank index.php
           find wordpress/wp-content/themes -mindepth 1 -maxdepth 1 -exec rm -rf {} +
           printf '<?php // Silence is golden.\n' > wordpress/wp-content/themes/index.php
+
+      - name: Add wgh-starter theme
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          # Copy PHP theme files from repo
+          cp -r wgh-starter wordpress/wp-content/themes/wgh-starter
+          # Copy static assets from "wp master" into the theme
+          cp -r "wp master/css"          wordpress/wp-content/themes/wgh-starter/css
+          cp -r "wp master/js"           wordpress/wp-content/themes/wgh-starter/js
+          cp -r "wp master/font-awesome" wordpress/wp-content/themes/wgh-starter/font-awesome
+          cp    "wp master/screenshot.png" wordpress/wp-content/themes/wgh-starter/screenshot.png
+
+      - name: Add auto-setup MU plugin
+        if: steps.check.outputs.exists == 'false'
+        run: |
+          mkdir -p wordpress/wp-content/mu-plugins
+          cp mu-plugins/wgh-auto-setup.php wordpress/wp-content/mu-plugins/wgh-auto-setup.php
 
       - name: Install aam-wp-migration
         if: steps.check.outputs.exists == 'false'
@@ -93,6 +113,6 @@ jobs:
           gh release create "v${{ steps.wp_version.outputs.version }}" \
             --repo "$GITHUB_REPOSITORY" \
             --title "WordPress Custom v${{ steps.wp_version.outputs.version }}" \
-            --notes "Custom WordPress v${{ steps.wp_version.outputs.version }} — plugins: aam-wp-migration, classic-editor, secure-custom-fields. All default themes and bundled plugins removed." \
+            --notes "Custom WordPress v${{ steps.wp_version.outputs.version }} — theme: wgh-starter (auto-activated on first boot). Plugins: aam-wp-migration, classic-editor, secure-custom-fields (all auto-activated on first boot). Default themes and bundled plugins removed." \
             "${{ steps.zip.outputs.name }}" \
             "wordpress-custom-latest.zip"

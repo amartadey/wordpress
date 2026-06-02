@@ -1,0 +1,532 @@
+@charset "utf-8";
+/* CSS Document */
+body{ width:100%; padding:0; margin:0; background:#fff;  font-family: 'SF UI Display Regular'; font-weight: 400;}
+a{ outline:none; }
+a:focus, a:hover{ outline:none; text-decoration:none; }
+ul{ padding:0; margin:0; list-style:none; }
+@media screen and (min-width: 1350px) { 
+	.container{ max-width:1315px; }
+}
+/* ___________________ Fontface Start ______________________*/
+@font-face {
+    font-family: 'SF UI Display Bold';
+    src: url('../fonts/SFUIDisplay-Bold.eot');
+    src: url('../fonts/SFUIDisplay-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/SFUIDisplay-Bold.woff2') format('woff2'),
+        url('../fonts/SFUIDisplay-Bold.woff') format('woff'),
+        url('../fonts/SFUIDisplay-Bold.ttf') format('truetype'),
+        url('../fonts/SFUIDisplay-Bold.svg#SFUIDisplay-Bold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display light';
+    src: url('../fonts/SFUIDisplay-Light.eot');
+    src: url('../fonts/SFUIDisplay-Light.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/SFUIDisplay-Light.woff2') format('woff2'),
+        url('../fonts/SFUIDisplay-Light.woff') format('woff'),
+        url('../fonts/SFUIDisplay-Light.ttf') format('truetype'),
+        url('../fonts/SFUIDisplay-Light.svg#SFUIDisplay-Light') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display semi';
+    src: url('../fonts/SFUIDisplay-Semibold.eot');
+    src: url('../fonts/SFUIDisplay-Semibold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/SFUIDisplay-Semibold.woff2') format('woff2'),
+        url('../fonts/SFUIDisplay-Semibold.woff') format('woff'),
+        url('../fonts/SFUIDisplay-Semibold.ttf') format('truetype'),
+        url('../fonts/SFUIDisplay-Semibold.svg#SFUIDisplay-Semibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display thin';
+    src: url('../fonts/SFUIDisplay-Thin.eot');
+    src: url('../fonts/SFUIDisplay-Thin.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/SFUIDisplay-Thin.woff2') format('woff2'),
+        url('../fonts/SFUIDisplay-Thin.woff') format('woff'),
+        url('../fonts/SFUIDisplay-Thin.ttf') format('truetype'),
+        url('../fonts/SFUIDisplay-Thin.svg#SFUIDisplay-Thin') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Selene Bold';
+    src: url('../fonts/Selene-Bold.eot');
+    src: url('../fonts/Selene-Bold.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/Selene-Bold.woff2') format('woff2'),
+        url('../fonts/Selene-Bold.woff') format('woff'),
+        url('../fonts/Selene-Bold.ttf') format('truetype'),
+        url('../fonts/Selene-Bold.svg#Selene-Bold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SF UI Display Regular';
+    src: url('../fonts/SFUIDisplay-Regular.eot');
+    src: url('../fonts/SFUIDisplay-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/SFUIDisplay-Regular.woff2') format('woff2'),
+        url('../fonts/SFUIDisplay-Regular.woff') format('woff'),
+        url('../fonts/SFUIDisplay-Regular.ttf') format('truetype'),
+        url('../fonts/SFUIDisplay-Regular.svg#SFUIDisplay-Regular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+/* ___________________ Fontface Ends _______________________*/
+
+/* ___________________ Header Starts _______________________*/
+.navbar-default{ display: block;  padding:0; margin:0; background:none; border:none; transition: all 300ms ease-in-out; }
+.navbar-default .top-block{ background: #E8AD25; padding:7px 0 8px; margin: 0 }
+.navbar-default .top-block .right-block{ display: flex; align-items: center; padding: 0; margin: 0 }
+.navbar-default .top-block .right-block .phone { position: relative; padding: 0 35px 0 32px; margin: 0; border-right: 1px solid rgba(0,0,0,0.2); }
+.navbar-default .top-block .right-block .phone:before { content: ""; position: absolute; width: 22px; height: 22px; background: url(../images/icons.png) 0 0; top: 0; left: 0 }
+.navbar-default .top-block .right-block .phone a { display: inline-block; font-family: 'SF UI Display Regular'; font-weight: 400; font-size: 18px; color: #000000; line-height: 20px; letter-spacing: 0.05em; padding: 0 0 0 0; margin: 0}
+.navbar-default .top-block .right-block .social { padding-left: 25px; }
+.navbar-default .top-block .right-block .social ul { display: flex; }
+.navbar-default .top-block .right-block .social ul li { padding: 0 10px; margin: 0 }
+.navbar-default .top-block .right-block .social ul li a { display: inline-block; font-size: 18px; color: rgba(0,0,0,0.5); }
+.navbar-default .bottom-block { position: relative; z-index: 5;  padding: 10px 0; margin: 0 }
+.navbar-default .bottom-block .logo-block a { display: inline-block; }
+.navbar-default .bottom-block .rt-block .shop-button { padding: 0; margin: 0 0 0 55px;  }
+.navbar-default .bottom-block .rt-block .shop-button a { position: relative; display: inline-block; padding: 13px 30px 15px 70px; background: #17A085; font-size: 16px; line-height: 18px; letter-spacing: 0.1em; color: #fff; border-radius: 30px; text-transform: uppercase; }
+.navbar-default .bottom-block .rt-block .shop-button a:before { content: ""; position: absolute; width: 28px; height: 28px; background: url(../images/icons.png) -26px 0; top: 8px; left: 27px; }
+
+/*Home Banner*/
+.home-slider { padding: 0; margin: -150px 0 0 0; position: relative; }
+.home-slider .main-image { padding: 0; margin: 0 }
+.home-slider .main-image img { width: 100%; height: auto; padding: 0; margin: 0 }
+.home-slider .desc { text-align: center; position: absolute; z-index: 5; width: 100%; left: 0; bottom: 20%; padding: 0; margin: 0 }
+.home-slider .desc h3 { font-family: 'SF UI Display semi'; font-weight: 600; font-size: 18px; color: #FFFFFF; line-height: 20PX; padding: 0 0 38px 0; margin: 0; letter-spacing: 0.46em; text-transform: uppercase; }
+.home-slider .desc h1 { text-transform: uppercase; font-family: 'Selene Bold'; font-weight: 700; font-size: 52px; line-height: 45px; color: #fff; letter-spacing: 0; padding: 0 0 50px 0; margin: 0 }
+.home-slider .desc h1 span{ display: block; }
+.home-slider .desc a { position: relative; display: inline-block; padding: 13px 30px 15px 70px; background: #E8AD25; font-size: 16px; line-height: 18px; letter-spacing: 0.1em; color: #fff; border-radius: 30px; text-transform: uppercase; }
+.home-slider .desc a:before { content: ""; position: absolute; width: 28px; height: 28px; background: url(../images/icons.png) -26px 0; top: 8px; left: 27px; }
+
+/*About Top Start*/
+
+.about-top { background: url(../images/about-top-bg.jpg) no-repeat 0 0; background-size: cover; padding: 0; margin: 0 }
+.about-top .text-block { padding: 100px 0 0 0 }
+.about-top .text-block h2{ text-transform: uppercase; font-family: 'Selene Bold'; font-weight: 700; font-size: 36px; color: #fff; line-height: 38px; letter-spacing: 0em; padding: 0 0 40px 0; margin: 0 0 40px 0; position: relative; }
+.about-top .text-block h2:before { content: ""; position: absolute; width: 19px; height: 4px; background: #E8AD25; bottom: 0; left: 0 }
+.about-top .text-block h2:after { content: ""; position: absolute; width: 25px; height: 1px; background: rgba(255,255,255,0.4); bottom: 0; left: 19px }
+.about-top .text-block p { font-size: 16px; color: #fff; line-height: 24px; padding: 0 0 30px 0; margin: 0 }
+.about-top .img-block { padding: 0; margin: 0 }
+.about-top .img-block img { width: 100%; height: auto; padding: 0; margin: 0 }
+
+/*About Bottom*/
+.about-bottom { padding: 75px 0 50px; margin: 0 }
+.about-bottom .lt-block { position: relative; padding: 0; margin: 0 }
+.about-bottom .icons-block { display: flex; align-items: center; justify-content: center; text-align: center; width: 340px; height: 340px; border-radius: 50%; background: linear-gradient(135deg, rgba(244,208,63,1) 0%,rgba(22,160,133,1) 100%); margin: 0 auto; }
+.about-bottom .icons-block .inner { width: 90%; height: 90%; border-radius: 50%; border: 2px solid #fff; }
+.about-bottom .icons-block .inner ul { display: inline-block; text-align: left; padding: 25px 0 0 0 }
+.about-bottom .icons-block .inner ul li { position: relative; font-family: 'SF UI Display light'; font-weight: 300; font-size: 20px; color: #fff; line-height: 22px; text-transform: capitalize; padding: 17px 0 8px 44px; margin: 0 }
+.about-bottom .icons-block .inner ul li:nth-child(1):before { content: ""; position: absolute; width: 37px; height: 37px; background: url(../images/icons.png) 435px -93px; bottom: 0; left: 0 }
+.about-bottom .icons-block .inner ul li:nth-child(2):before { content: ""; position: absolute; width: 38px; height: 41px; background: url(../images/icons.png) 384px -93px; bottom: 0; left: 0 }
+.about-bottom .icons-block .inner ul li:nth-child(3):before { content: ""; position: absolute; width: 37px; height: 37px; background: url(../images/icons.png) 334px -93px; bottom: 0; left: 0 }
+.about-bottom .icons-block .inner ul li:nth-child(4):before { content: ""; position: absolute; width: 37px; height: 32px; background: url(../images/icons.png) 276px -93px; bottom: 0; left:0;  }
+.about-bottom .lt-block .dog-cat-image { position: absolute; width: 100%; bottom: -204px; left: 0 }
+.about-bottom .lt-block .dog-cat-image img { width: 100%; height: auto; }
+
+/*About Bottom Start*/
+
+.about-bottom .rt-block h4 { font-family: 'SF UI Display semi'; font-weight: 600; font-size: 20px; color: rgba(0,0,0,0.7); text-transform: uppercase; letter-spacing: 0.05em; padding: 0 0 15px 0; margin: 0 }
+.about-bottom .rt-block h2 { position: relative; font-family: 'SF UI Display thin'; font-weight: 100; font-size: 40px; color: #000000; line-height: 48px; padding: 0 0 20px 0; margin: 0 0 20px; }
+.about-bottom .rt-block h2:before { content: ""; position: absolute; width: 20px; height: 4px; background: #17A085; bottom: 0; left: 0; }
+.about-bottom .rt-block h2:after { content: ""; position: absolute; width: 25px; height: 1px; background: rgba(0,0,0,0.2); bottom: 0; left: 20px; }
+.about-bottom .rt-block p { font-family: 'SF UI Display Regular'; font-weight: 400; font-size: 16px; color: rgba(0,0,0,0.9); line-height: 30px; padding: 0; margin: 0 0 35px 0}
+.about-bottom .rt-block a { position: relative; display: inline-block; padding: 11px 49px 11px 30px; background: #E8AD25; font-size: 16px; line-height: 18px; letter-spacing: 0.1em; color: #fff; border-radius: 30px; text-transform: uppercase; }
+.about-bottom .rt-block a:after {content: ""; position: absolute; width: 8px; height: 19px; background: url(../images/icons.png) -61px 0; top: 8px; right: 27px; }
+
+/*Service Start*/
+.service { text-align: center; background: url(../images/service.jpg) no-repeat 0 0; background-size: cover; padding: 80px 0 40px; margin: 0 }
+.service h2 { font-family: 'Selene Bold'; font-weight: 700; font-size: 36px; color: #151515; line-height: 40px; text-transform: uppercase; padding: 0 0 40px 0; margin: 0 }
+.service h2 span { display: block; }
+.service .all-service { display: flex; flex-wrap: wrap; justify-content: space-between;  }
+.service .all-service .single { padding: 0; margin: 0 }
+.service .all-service .single img { padding-bottom: 20px; width: auto; max-width: 100% }
+.service .all-service .single p { font-size: 18px; color: #fff; line-height: 22px; padding: 0; margin: 0 }
+.service .all-service .single p span { display: block; }
+.service .shop-button { margin: 30px 0 0 0 }
+.service .shop-button a { position: relative; display: inline-block; padding: 13px 30px 15px 70px; background: #17A085; font-size: 16px; line-height: 18px; letter-spacing: 0.1em; color: #fff; border-radius: 30px; text-transform: uppercase; } 
+.service .shop-button a:before { content: ""; position: absolute; width: 28px; height: 28px; background: url(../images/icons.png) -26px 0; top: 8px; left: 27px; }
+
+/*Best Sellers*/
+
+.best-sellers { background: url(../images/best-seller-bg.jpg) no-repeat 0 0; background-size: cover; padding: 55px 0 60px; margin: 0 }
+.best-sellers h2 { text-align: center; font-family: 'Selene Bold'; font-weight: 700; font-size: 36px; color: #151515; line-height: 40px; text-transform: uppercase; padding: 0 0 40px 0; margin: 0 }
+.best-sellers span { display: block; }
+.best-sellers .all-products { display: flex; background: #fff; padding: 30px; margin: 0 }
+.best-sellers .all-products .single-product { border: 1px solid #E1E1E1; }
+.best-sellers .all-products .img-block { position: relative; padding: 0; margin: 0 }
+.best-sellers .all-products .img-block > img { width: 100%; padding: 0; margin: 0; }
+.best-sellers .all-products .img-block .stars-block { position: absolute; bottom: -17px; left: 0; right: 0; margin: 0 auto; text-align: center; }
+.best-sellers .all-products .name-block { text-align: center; padding: 32px 0 22px; margin: 0 }
+.best-sellers .all-products .name-block h3 { font-family: 'SF UI Display semi'; font-weight: 600; font-size: 20px; color: #1E1E1E; line-height: 22px; padding: 0 0 15px 0; margin: 0 }
+.best-sellers .all-products .name-block h4 { font-size: 20px; color: #2D5DD6; line-height: 22px; padding: 0; margin: 0 }
+.best-sellers .all-products .add-cart { background: #F5F5F5; text-align: center; padding: 30px 0; margin: 0 }
+.best-sellers .all-products .add-cart a { position: relative; display: inline-block; padding: 11px 30px 13px 47px; background: #17A085; font-size: 13px; line-height: 15px; letter-spacing: 0.1em; color: #fff; border-radius: 30px; text-transform: uppercase;  }
+.best-sellers .all-products .add-cart a:before { content: ""; position: absolute; width: 28px; height: 21px; background: url(../images/icons.png) -74px 0; top: 8px; left: 17px;}
+
+/*Testimonial Start*/
+.testimonial-carousel { background: #fff; padding: 60px 0 200px; margin: 0 }
+.testimonial-carousel h2 { text-align: center; font-family: 'Selene Bold'; font-weight: 700; font-size: 36px; color: #151515; line-height: 40px; text-transform: uppercase; padding: 0 0 40px 0; margin: 0 }
+.testimonial-carousel .block { padding: 109px 0 0 0; margin: 0; position: relative; }
+.testimonial-carousel .block .text-block { padding: 58px 0 50px 45px; margin: 0 }
+.testimonial-carousel .block .text-block h4 { position: relative; font-family: 'SF UI Display Bold'; font-weight: 700;  font-size: 30px; color: #fff; line-height: 34px; width: 48%; padding: 93px 0 20px 0; margin: 0 }
+.testimonial-carousel .block .text-block p { position: relative; font-size: 20px; color: #fff; line-height: 22px; text-transform: capitalize; padding: 0 0 0 40px; margin: 0 }
+.testimonial-carousel .block .text-block p:before { content: ""; position: absolute; width: 25px; height: 1px; background: rgba(255,255,255,0.5); top: 10px; left: 0 }
+.testimonial-carousel .block .text-block h4:before { content: ""; position: absolute; width: 66px; height: 66px; background: url(../images/icons.png) no-repeat -109px 0; top: 0; left: 0}
+.testimonial-carousel .owl-item:nth-child(odd) .block .text-block { background: url(../images/test-odd-bg.jpg) no-repeat 0 0; background-size: cover; }
+.testimonial-carousel .owl-item:nth-child(even) .block .text-block { background: url(../images/test-even-bg.jpg) no-repeat 0 0; background-size: cover; }
+.testimonial-carousel .block .img-block { position: absolute; bottom: 0; right: 0 }
+.testimonial-carousel #blog-demo .owl-nav { display: none; }
+.testimonial-carousel #blog-demo .owl-dots { display: flex; justify-content: center; }
+.testimonial-carousel #blog-demo .owl-dots .owl-dot span{ border-radius: 50%; display: inline-block; width: 10px; height: 10px; background: rgba(0,0,0,0.5); margin: 0 5px;}
+.testimonial-carousel #blog-demo .owl-dots .owl-dot.active span{ background: rgba(0,0,0,1); }
+
+/*Footer*/
+footer { padding:0; margin: 0; position: relative; }
+
+footer:before { content: ""; position: absolute; top: -155px; height: 155px; left: 0; right: 0; background: url(../images/footer-top.png); background-size: cover; width: 100%; }
+footer .bottom-block { background: url(../images/footer-bg.jpg) no-repeat 0 0; background-size: 100% 100%; padding: 44px 0 40px; margin: 0 }
+footer .bottom-block .loc-phone-email { padding: 0 0 55px 0; border-bottom: 1px solid rgba(0,0,0,0.15); margin: 0 0 40px 0 }
+footer .bottom-block .loc-phone-email .box { display: flex; padding: 0; margin: 0}
+footer .bottom-block .loc-phone-email .box .text-block h3 { font-family: 'SF UI Display semi'; font-weight: 600; font-size: 16px; color: #000000; line-height: 24px; padding: 0 0 12px 0; margin: 0; letter-spacing: 0.07em; }
+footer .bottom-block .loc-phone-email .box img { padding: 0 0 0 0; margin: 0 20px 0 0; }
+footer .bottom-block .loc-phone-email .box .text-block p { font-family: 'SF UI Display light'; font-weight: 300; font-size: 21px; line-height: 23px; color: rgba(0,0,0,0.7); padding: 0; margin: 0 }
+footer .bottom-block .loc-phone-email .box .text-block a.tel { display: inline-block; font-family: 'SF UI Display Regular'; font-weight: 400; font-size: 25px; color: rgba(0,0,0,0.7); line-height: 27px; padding: 0; margin: 0 }
+footer .bottom-block .loc-phone-email .box .text-block a.mail { display: inline-block; font-family: 'SF UI Display Regular'; font-weight: 400; font-size: 19px; color: rgba(0,0,0,0.7); line-height: 21px; padding: 0; margin: 0 }
+
+footer .bottom-block .menu-box { display: flex; justify-content: space-between; padding:0; margin: 0 }
+footer .bottom-block .menu-box .box:nth-child(2) .list-box { display: flex; justify-content: space-between; }
+footer .bottom-block .menu-box .box h3 { font-family: 'SF UI Display semi'; font-size: 16px; color: #000000; line-height: 18px; letter-spacing: 0.12em; text-transform: uppercase; padding: 0 0 20px 0; margin: 0 }
+footer .bottom-block .menu-box .box li{ padding: 0 0 10px 0; margin: 0 }
+footer .bottom-block .menu-box .box a { display: inline-block; font-family: 'SF UI Display light';font-size: 15px; color: #000000; line-height: 17px; text-transform: capitalize; letter-spacing: 0.06em; padding: 0; margin: 0 }
+footer .bottom-block .menu-box .box li { font-family: 'SF UI Display light';font-size: 15px; color: #000000; line-height: 17px; text-transform: capitalize; letter-spacing: 0;}
+footer .bottom-block .menu-box .box:nth-child(2) ul:nth-child(1) { padding-right: 50px; }
+footer .bottom-block .copyright-block .footer-logo { text-align: center; position: relative; padding: 0; margin: 0 }
+footer .bottom-block .copyright-block .footer-logo:before { content: ""; position: absolute; width: 30%; height: 1px; background: rgba(0,0,0,0.15); top: 35px; left: 0}
+footer .bottom-block .copyright-block .footer-logo:after { content: ""; position: absolute; width: 30%; height: 1px; background: rgba(0,0,0,0.15); top: 35px; right: 0}
+footer .bottom-block .copyright { display: flex; justify-content: space-between; padding: 10px 0 0; margin: 0 }
+footer .bottom-block .copyright p {  font-family: 'SF UI Display semi'; font-size:14px; color: #17A085; line-height: 16px; padding: 0; margin: 0}
+footer .bottom-block .copyright p a{ display: inline-block; color: #000000; }
+footer .bottom-block .copyright p span {    font-size: 16px; color: #000; display: inline-block; animation: lovess 1.5s alternate infinite ease-in; padding: 0 2px; }
+
+@keyframes lovess { 
+    0% {transform: scale(0.8);}
+    100% {transform: scale(1.3); }
+ }
+/*-------Footer End-------*/
+
+/*-------Inner Page About Section Start-------*/
+
+/*Home Banner*/
+.banner{ position:relative; margin:-150px 0 0 0; padding:0; }
+.banner img{ width: 100%; height: auto; }
+.banner .desc{ position: absolute; left: 0; right:0; bottom:24%; text-align:center; margin:0; padding:0; }
+.banner .desc h2{ font-family:'SF UI Display Bold'; font-size:59px; line-height:61px; font-weight:700; color:#fff; }
+/*------Banner End------*/
+
+/*------About Start------*/
+
+.about{ margin:0; padding:35px 0 28px 0; background:#E8FCEC; border-bottom:2px solid #17A085; }
+.about .text-block{ text-align:center; margin:0; padding:0; }
+.about .text-block h2{ position:relative; font-family:'SF UI Display light'; font-size:35px; line-height:37px; font-weight:300; color:rgba(0, 0, 0, .8); margin:0; padding:0 0 20px 0; letter-spacing:0.02em; }
+.about .text-block h2:after{ content:""; position:absolute; width:58px; height:1px; background:rgba(0, 0, 0, .1); bottom:0; left: 0; right: 0; margin: 0 auto; }
+.about .text-block h2:before{ content:""; position:absolute; width:19px; height:3px; background:#17A085; bottom:0; left: 0; right:36px; margin: 0 auto; }
+.about .text-block p{ font-family:'SF UI Display light'; font-size:17px; line-height:24px; font-weight:300; color:#000; margin:0; padding:23px 10% 31px; letter-spacing:0; }
+.about .text-block h3{ font-family:'SF UI Display light'; font-size:17px; line-height:24px; font-weight:300; color:#000; margin:0; padding:0 0 34px 0; letter-spacing:0; }
+.about .text-block a{ font-family:'SF UI Display light'; font-size:17px; line-height:12px; font-weight:300; color:#fff; margin:0; padding:16px 29px 17px 29px; border-radius:31px; letter-spacing:0.18em; display:inline-block; text-transform:uppercase; 
+background:#E8AD25; }
+/*------About End------*/
+
+/*------Healthy Food Start------*/
+.healthy-food{ margin:0; padding:63px 0 61px 0; background:url(../images/healthy-food.jpg) no-repeat center; background-size:cover; }
+.healthy-food .food{ margin:0; padding:0; }
+.healthy-food .food .text-block{ margin:0; padding:0; }
+.healthy-food .food .text-block h2{ position:relative; font-family:'SF UI Display Regular'; font-size:58px; line-height:60px; font-weight:400; color:rgba(0, 0, 0, .8); margin:0; padding:0 0 30px 0; }
+.healthy-food .food .text-block h2:after{ content:""; position:absolute; width:135px; height:1px; background:rgba(0, 0, 0, .1); bottom:0; left: 0; }
+.healthy-food .food .text-block h2:before{ content:""; position:absolute; width:35px; height:3px; background:#17A085; bottom:0; left: 0; }
+.healthy-food .food .text-block p{ font-family:'SF UI Display light'; font-size: 16px;line-height: 26px; font-weight:300; color:#000; margin:0; padding:25px 0 0 0; letter-spacing:0.04em; }
+.healthy-food .food .imag-block{ margin:0; padding:0; border:2px solid #fff; box-shadow: 1px 2px 5px rgba(0, 0, 0, .5); }
+.healthy-food .food .imag-block img{ width:100%; }
+/*------Healthy Food End------*/
+
+/*------Dog Start------*/
+.dog{ margin:0; padding:59px 0 0 0; background:url(../images/dog-bg.jpg) no-repeat center; background-size: cover; padding-bottom: 30px; }
+.dog h2{ font-family:'SF UI Display Regular'; font-size:47px; line-height:49px; font-weight:400; letter-spacing:0.02em;
+color:#fff; margin:0; padding:0 0 47px 0; text-transform:uppercase; text-align:center; }
+.dog .dog-block{ margin:0; padding:0; }
+.dog .dog-block img{ width:100%; }
+.dog .dog-block .box{ margin:0; padding:38px 40px 60px 47px; background:#fff; }
+.dog .dog-block .box .text{ margin:0; padding:0; }
+.dog .dog-block .box .text h3{ font-family:'SF UI Display Regular'; font-size:32px; line-height:34px; font-weight:400; letter-spacing:0.02em; color:rgba(0, 0, 0, .9); margin:0; padding:0 0 4px 0; text-transform:uppercase; }
+.dog .dog-block .box .text h4{ position:relative; font-family:'SF UI Display light'; font-size:15px; line-height:18px; font-weight:300; letter-spacing:0.03em; color:#000; margin:0; padding:0 0 22px 0; text-transform:uppercase; }
+.dog .dog-block .box .text h4:after{ content:""; position:absolute; width:125px; height:1px; background:rgba(0, 0, 0, .1); bottom:0; left: 0; }
+.dog .dog-block .box .text h4:before{ content:""; position:absolute; width:35px; height:3px; background:#17A085; bottom:0; left: 0; }
+.dog .dog-block .box .text p{ font-family:'SF UI Display light'; font-size: 16px; line-height: 23px; font-weight:300; 
+letter-spacing:0.04em; color:#000; margin:0; padding:20px 0 0 0; }
+.dog .dog-block .box .text a{ font-family:'SF UI Display light'; font-size:15px; line-height:17px; font-weight:300; color:#fff; letter-spacing:0.10em; margin:42px 0 0 0; padding:12px 60px 11px 28px; display:inline-block; text-transform:uppercase; border-radius:25px; background:url(../images/arrow.png) no-repeat 84% center #17A085; }
+/*------Dog End------*/
+
+/*------Box section Start------*/
+.box-section{ margin:0; padding:68px 0 164px 0; background:url(../images/box-bg.jpg) no-repeat center; background-size:cover; }
+.box-section .box-block{ margin:0; padding:0; }
+.box-section .box-block .box{ margin:0; padding:22px 40px 41px 40px; background:#fff; text-align:center; height:100%; box-sizing:border-box; }
+.box-section .box-block .box .imag{ margin:0; padding:0; }
+.box-section .box-block .box .text{ margin:0; padding:0; }
+.box-section .box-block .box .text h2{ font-family:'SF UI Display Bold'; font-size:26px; line-height:28px; font-weight:700; color:rgba(0, 0, 0, .8); letter-spacing:0.06em; margin:0; padding:28px 0 3px 0; text-transform:uppercase; }
+.box-section .box-block .box .text h3{ font-family:'SF UI Display Regular'; font-size:22px; line-height:24px; font-weight:400; color:rgba(0, 0, 0, .9); letter-spacing:0.02em; margin:0; padding:0 0 19px 0; position:relative; }
+.box-section .box-block .box .text h3:after{ content:""; position:absolute; width:42px; height:3px; background:#17A085; bottom:0; left: 0; right: 0; margin: 0 auto; }
+.box-section .box-block .box .text p{ font-family:'SF UI Display Light'; font-size:14px; line-height:30px; font-weight:300; color:rgba(0, 0, 0, .9); letter-spacing:0.02em; margin:0; padding:20px 0 0 0; }
+/*------Box section End------*/
+
+/*-------Inner Page About Section End-------*/
+
+
+/*-------Inner Page Contact Us Section Start-------*/
+/*Home Banner*/
+.banner{ position:relative; margin:-150px 0 0 0; padding:0; }
+.banner img{ width: 100%; height: auto; }
+.banner .desc{ position: absolute; left: 0; right:0; bottom:24%; text-align:center; margin:0; padding:0; }
+.banner .desc h2{ font-family:'SF UI Display Bold'; font-size:59px; line-height:61px; font-weight:700; color:#fff; }
+/*------Banner End------*/
+
+/*------Contact Start------*/
+.contact{ margin:0; padding:55px 0 60px 0; background:url(../images/contact-bg.jpg) no-repeat center; background-size:cover; position:relative; }
+.contact .lt-block{ margin:0; padding:0; }
+.contact .lt-block h2{ font-family: 'Selene Bold'; font-size:40px; line-height:42px; font-weight:700; color:#fff; margin:0; padding:0 0 42px 0; letter-spacing:0.02em; }
+.contact .lt-block .text-block{ margin:0; padding:0; }
+.contact .lt-block .text-block .block{ display:flex; margin:0; padding:0 0 27px 0; }
+.contact .lt-block .text-block .block .image{ margin:0; padding:0; }
+
+.contact .lt-block .text-block .block .text{ margin:0; padding:0 0 0 38px; }
+.contact .lt-block .text-block .block .text h3{ font-family: 'Selene Bold'; font-size:17px; line-height:19px; font-weight:700; color:#fff; margin:0; padding:0 0 10px 0; letter-spacing:0.32em; position:relative; }
+.contact .lt-block .text-block .block .text h3:before{ content:""; position:absolute; width:74px; height:1px; right:20px; top:9px; 
+background:rgba(255, 255, 255, .4); }
+.contact .lt-block .text-block .block .text p{ font-family:'SF UI Display Regular'; font-size:16px; line-height:18px; font-weight:400; color:#fff; margin:0; padding:0; letter-spacing:0.06em; }
+.contact .lt-block .text-block .block .text p span{ display:block; }
+.contact .lt-block .text-block .block .text a{ font-family:'SF UI Display Regular'; font-size:26px; line-height:28px; font-weight:400; color:#fff; margin:0; padding:0; letter-spacing:0.06em; display:inline-block; }
+.contact .lt-block .text-block .block:nth-child(4) .text a{ font-family:'SF UI Display Regular'; font-size:20px; line-height:22px; font-weight:400; color:#fff; margin:0; padding:0; letter-spacing:0.06em; display:inline-block; }
+
+.contact .lt-block .text-block .block:nth-child(2) .text h3:before{ right:-54px; }
+.contact .lt-block .text-block .block:nth-child(3) .text h3:before{ right:45px; }
+.contact .lt-block .text-block .block:nth-child(4) .text h3:before{ right:100px; }
+.contact .maps{ margin:0; padding:0; border-radius:4px; overflow:hidden; box-shadow: 1px 2px 5px rgba(0, 0, 0, .4);  border:2px solid #fff; height: 100%; }
+.contact .maps iframe{ width:100%; margin:0; padding:0; height: 100%;}
+
+/*------Contact End------*/
+
+/*------Form Start------*/
+.form-section{ margin:0; padding:70px 0 68px 0;background: #eaeaea; }
+.form-section .tex{ text-align:center; margin:0; padding:0 0 63px 0; }
+.form-section .tex h4{ font-family:'SF UI Display Regular'; font-size:26px; line-height:28px; font-weight:400; color:#fff; margin:0; padding:16px 19px 14px 19px; letter-spacing:0.02em; background:#E3AD36; display:inline-block; position:relative; }
+.form-section .tex h4:before{ content:""; position:absolute; width:30px; height:100%; background:#E3AD36;transform:skewX(-18deg); left:-15px; top:0; }
+.form-section .tex h4:after{ content:""; position:absolute; width:30px; height:100%; background:#E3AD36;transform:skewX(-18deg); right:-15px; top:0; }
+.form-section .form-block{ background: #fff; margin:0 auto; padding:36px 58px 36px 58px; width:874px;     box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.2); box-sizing: border-box; border-radius: 3px;}
+.form-section .form-block .from1{position: relative;  margin:0; padding:0 0 27px 0; }
+.form-section .form-block .from1 h5{ font-family:'SF UI Display Regular'; font-size:18px; line-height:20px; font-weight:400; color:rgba(0, 0, 0, .8); margin:0; padding:0 0 8px 0; }
+.form-section .form-block .from1 .form-control{ height:43px; box-shadow:none; border-color:rgba(0, 0, 0, .1); background:#fff; border-radius:0; padding-left: 60px; background:url(../images/from-icon1.png) no-repeat 14px center #fff; }
+.form-section .form-block .from1 .form-control:focus { border-color: #E3AD36 }
+.form-section .form-block .from1:before {content: ""; position: absolute; width: 1px; height: 25px; background: rgba(0, 0, 0, .1); top: 37px; left: 45px;} 
+.form-section .form-block .from1 textarea.form-control{ height:112px; resize:none; }
+.form-section .form-block .col-lg-6.col-md-6.col-sm-12:nth-child(3) .from1 .form-control{ background:url(../images/from-icon2.png) no-repeat 14px center; }
+.form-section .form-block .col-lg-6.col-md-6.col-sm-12:nth-child(4) .from1 .form-control{ background:url(../images/from-icon4.png) no-repeat 14px center; }
+.form-section .form-block .col-lg-12.col-md-12.col-sm-12.col-xs-12 .from1 .form-control{ background:url(../images/from-icon5.png) no-repeat 12px 10px; }
+
+.form-section .form-block .submit{ font-family: 'SF UI Display Regular'; font-size: 18px; line-height: 20px; font-weight: 400; color: #fff; margin: 15px 0 0 0; padding: 14px 100px 13px 32px; border: none; letter-spacing: 0.24em; text-transform: uppercase; border-radius: 31px; background: url(../images/submit-icon.png) no-repeat 149px center #E3AD36; }
+
+/*------Form End------*/
+
+/*------Down Dog Start------*/
+.down-dog{ background:url(../images/down-dogbg.jpg) no-repeat center; background-size:cover; margin:0; padding:42px 0 200px 0; }
+.down-dog .image{ margin:0; padding:0; }
+.down-dog .rt-block{ margin:; padding:30px 0 0 0; }
+.down-dog .rt-block .text-block{ margin:; padding:0; }
+.down-dog .rt-block .text-block h2{ font-family: 'Selene Bold'; font-size:36px; line-height:38px; font-weight:700; color:#fff; margin:; padding:0 0 22px 0; letter-spacing:-0.04em; text-transform:uppercase; position:relative; }
+.down-dog .rt-block .text-block h2:after{ content:""; position:absolute; width:38px; height:1px; background:rgba(255,255,255, .4); left:0; bottom:0; }
+.down-dog .rt-block .text-block h2:before{ content:""; position:absolute; width:11px; height:2px; background:#E7AD2F; left:0; bottom:0; }
+.down-dog .rt-block .text-block h2 span{ display:block; }
+.down-dog .rt-block .text-block p{ font-family:'SF UI Display Regular'; font-size:16px; line-height:26px; font-weight:400; color:#fff; margin:0; padding:23px 0 12px 0; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*____________________________________________
+                Media Quaries 
+______________________________________________*/
+
+@media only screen and (orientation:landscape) {
+body { -webkit-text-size-adjust:none; }
+}
+@media only screen and (orientation:portrait) {
+body { -webkit-text-size-adjust:none; }
+}
+
+@media screen and (max-width: 1350px){
+    footer .bottom-block .loc-phone-email .col-md-4 { flex: 0 0 100%; max-width: 100%; margin-top: 15px;}
+    footer .bottom-block .loc-phone-email .col-md-3 { flex: 0 0 100%; max-width: 100%; margin-top: 15px;}
+    .home-slider .desc { bottom: 10%; }
+    .home-slider .desc h3 { padding: 0 0 19px 0; }
+    .about-bottom .lt-block .dog-cat-image { bottom: -176px; }
+    }
+
+@media screen and (max-width: 1199px){
+    .testimonial-carousel .block { padding: 141px 0 0 0; }
+    footer .bottom-block .menu-box { display: block; }
+    footer .bottom-block .menu-box .box { padding: 15px 0 }
+    footer .bottom-block .menu-box .box:nth-child(2) .list-box { display: block; }
+    .sf-menu a { font-size: 15px; line-height: 17px; }
+    .about-bottom .rt-block h2 { font-size: 30px; line-height: 32px; }
+    .healthy-food .col-lg-6 { flex: 0 0 100%; max-width: 100%;}
+    .healthy-food .col-lg-5 { flex: 0 0 100%; max-width: 100%;}
+    .healthy-food { padding: 30px 0 }
+    .healthy-food .food .text-block h2 { font-size: 25px; line-height: 30px; }
+    .healthy-food .food .text-block p:last-child { padding-bottom: 30px; }
+    .dog .dog-block .col-lg-5 { flex: 0 0 100%; max-width: 100%;}
+    .dog .dog-block .col-lg-7 { flex: 0 0 100%; max-width: 100%;}
+    .dog { padding: 30px 0 30px }
+    .dog .dog-block img { width: auto; max-width: 100%; }
+    .dog .dog-block .image { text-align:  center; padding-bottom: 30px; }
+    .dog h2 { font-size: 25px; line-height: 30px; }
+    .dog .dog-block .box .text h3 { font-size: 23px; line-height: 25px; }
+	
+}
+@media screen and (max-width: 991px){
+    .home-slider .desc { position: initial; background: #191919; padding: 30px 0; }
+    .home-slider .desc h1 { font-size: 24px; line-height: 25px; padding-bottom: 21px; }
+    .home-slider .desc h3 { font-size: 14px; line-height: 16px; letter-spacing: 0.01em; }
+    .home-slider .desc a { font-size: 14px; line-height: 16px; padding: 9px 22px 11px 57px; }
+    .home-slider .desc a:before { top: 4px;left: 19px; }
+    .navbar-default .bottom-block .logo-block a img { width: 150px; } 
+    .home-slider { margin: -99px 0 0 0 }
+    .navbar-default .bottom-block .rt-block .shop-button a { font-size: 14px; line-height: 16px; padding: 9px 22px 11px 57px; }
+    .navbar-default .bottom-block .rt-block .shop-button a:before { top: 4px;left: 19px; }
+    .navbar-default .bottom-block .rt-block .shop-button { margin: 0 55px 0 0 }
+    #nav-wrap { position: initial; }
+    .navbar-default .bottom-block .container  { position: relative; }
+    .about-top .col-md-5 { flex: 0 0 100%; max-width: 100%; }
+    .about-top .col-md-6 { flex: 0 0 100%; max-width: 100%; }
+    .about-top .text-block { padding: 30px 0 0 0 }
+    .about-bottom .col-md-5 { flex: 0 0 100%; max-width: 100%; }
+    .about-bottom .col-md-7 { flex: 0 0 100%; max-width: 100%; }
+    .about-bottom .lt-block .dog-cat-image { position: initial; }
+    .about-bottom .icons-block .inner { display: flex; justify-content: center; align-items: center; }
+    .about-bottom .icons-block .inner ul { padding: 0  0 0 0  }
+    .service .all-service .single { width: 50%; padding: 15px 0 }
+    .best-sellers .all-products .col-md-3 { flex: 0 0 50%; max-width: 50%; }
+    .best-sellers .all-products .single-product { margin: 15px 0 }
+    .testimonial-carousel .block { padding: 108px 0 0 0 }
+    .banner { margin: -99px 0 0 0; }
+    .banner .desc { bottom: 10% }
+    .contact { background: url(../images/service.jpg) no-repeat 0 0; background-size: cover; }
+    .contact .maps iframe { height: 400px; }
+    .form-section .form-block { max-width: 100% }
+    .banner .desc h2 { font-size: 34px; line-height: 36px; }
+    .contact .col-md-4 { flex: 0 0 100%; max-width: 100%; }
+    .contact .col-md-7 { flex: 0 0 100%; max-width: 100%; }
+    .contact .maps iframe { height: 400px; display: flex; border: none !important; }    
+    .form-section .tex { padding: 0 0 25px 0 }
+    .form-section { padding: 30px 0 }
+    .form-section .tex h4 { font-size: 18px; line-height: 20px; }
+    .down-dog .col-md-5 { flex: 0 0 100%; max-width: 100%; }
+    .down-dog .col-md-7 { flex: 0 0 100%; max-width: 100%; }
+    .contact { padding: 30px 0; }
+    .contact .lt-block h2 { font-size: 25px; line-height: 30px; }
+    .down-dog .rt-block .text-block h2 { font-size: 25px; line-height: 30px; }
+    .box-section .box-block .col-lg-4 { flex: 0 0 100%; max-width: 100%; }
+    .box-section .box-block .box { margin: 15px 0; height: auto; }
+    .box-section { padding-top: 15px; }
+    .about .text-block h2 { font-size: 25px; line-height: 30px; }
+}
+
+
+
+/*NEW GRID SYSTEM*/
+@media screen and (max-width:768px){
+    .about-top .text-block h2 { font-size: 24px; line-height: 26px; padding: 0 0 23px 0; margin: 0 0 24px 0; }
+    .about-top .text-block p { font-size: 14px; line-height: 21px; }
+    .about-bottom .rt-block h4 { font-size: 16px; }
+    .service h2 { font-size: 25px; line-height: 32px; }
+    .service { padding: 30px 0 }
+    .best-sellers { padding: 30px 0; background: url(../images/best-seller-bg.jpg) repeat-y 0 0; }
+    .best-sellers h2 { font-size: 25px; line-height: 27px; padding: 0 0 18px 0 }
+    .best-sellers .all-products .col-md-3 { flex: 0 0 100%; max-width: 100%; }
+    .testimonial-carousel { padding: 30px 0 170px; }
+    .testimonial-carousel h2 { font-size: 25px; line-height: 32px; padding: 0 }
+    .testimonial-carousel .block .img-block img{ max-width: 150px; }
+    .testimonial-carousel .block { padding: 26px 0 0 0 }
+    .testimonial-carousel .block .text-block h4 { font-size: 21px; line-height: 28px; }
+    .form-section .tex h4:before { display: none; }
+    .form-section .tex h4:after { display: none; }
+    .about .text-block p { padding: 25px 0 }
+
+}
+
+@media screen and (max-width:575px){
+    #menu-icon { right: 15px; }
+    .navbar-default .top-block .justify-content-end{ justify-content: center !important; }
+    .banner .desc { position: initial; padding: 25px 0 20px; background: #191919 }
+}
+
+@media screen and (max-width:500px){
+    .navbar-default .bottom-block .rt-block .shop-button { display: none; }
+    footer .bottom-block .copyright { display: block; text-align: center; }
+    footer .bottom-block .copyright p { padding: 10px 0 }
+    .form-section .form-block { padding: 25px; }
+    .down-dog .image img { width: 100%; height: auto; }
+    .contact .lt-block .text-block .block .text { padding: 0 0 0 11px; }
+    .dog .dog-block .box { padding: 25px; }
+
+}
+
+@media screen and (max-width:400px){
+    .home-slider .desc h1 span { display: inline; }
+    .navbar-default .top-block .right-block { display: block; }
+    .navbar-default .top-block .right-block .phone { padding-right: 0; border: none; }
+    .about-bottom .icons-block { width: 275px; height: 275px; }
+    .service .all-service .single img { max-width: 85px; }
+    .best-sellers .all-products { background: none; padding: 0 }
+    .best-sellers .all-products .single-product { background: #fff; }
+    .testimonial-carousel .block .img-block { display: none; }
+    .testimonial-carousel .block .text-block h4 { width: 100% }
+    .testimonial-carousel .block .text-block { padding: 30px; }
+    footer .bottom-block .loc-phone-email .box img { display: none; }
+    .contact .lt-block .text-block .block .image img { width: 25px;  }
+    .contact .lt-block .text-block .block:nth-child(4) .text a { font-size: 17px; line-height: 19px; }
+    .contact .lt-block .text-block .block:nth-child(4) .text h3:before { right: 54px; }
+
+}
+
+@media screen and (max-width:350px){
+
+}

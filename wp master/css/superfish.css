@@ -1,0 +1,212 @@
+/*** ESSENTIAL STYLES ***/
+.sf-menu, .sf-menu * {
+	margin: 0;
+	padding: 0 0 0 0;
+	list-style: none;
+}
+.sf-menu li {
+	position: relative;
+}
+.sf-menu ul {
+	position: absolute;
+	display: none;
+	top: 100%;
+	left: 0;
+	z-index: 999;
+}
+.sf-menu > li {
+    background-image: url('../images/sfmenu-next-icon.png'); background-repeat: no-repeat; background-position: 81% 0;
+	float: left;
+	display:block;
+	padding:0 62px 0 0;
+	margin:0;
+    border-right: none;
+    letter-spacing: 0.05em;
+}
+
+.sf-menu > li:last-child{ padding:0; background: none; }
+
+.sf-menu li:hover > ul,
+.sf-menu li.sfHover > ul {
+	display: block;
+}
+
+.sf-menu a {
+	display: block;
+}
+.sf-menu ul ul {
+	top: 0;
+	left: 100%;
+}
+
+/*** DEMO SKIN ***/
+.sf-menu {
+	float: none;
+}
+.sf-menu ul {
+	box-shadow: 2px 2px 6px rgba(0,0,0,.2);
+	min-width: 195px; /* allow long menu items to determine submenu width */
+	background:#354e64;
+	padding:15px 15px;
+	border-radius:0 0 4px 4px;
+}
+.sf-menu a {
+	font-family: 'SF UI Display light';
+	font-weight: 300;
+	font-size:18px; 
+	color:#fff;
+	line-height:20px;
+    text-transform: uppercase;
+	padding:0 0 0 0; 
+	margin:0;
+	text-decoration: none;
+	transition: all 300ms ease-in-out;
+    text-align: center;
+}
+
+
+.sf-menu li a span {
+	display: block;
+	padding-top: 12px;
+}
+
+.sf-menu li {
+	white-space: nowrap; /* no need for Supersubs plugin */
+	*white-space: normal; /* ...unless you support IE7 (let it wrap) */
+	-webkit-transition:all .2s;
+	transition: all .2s;
+}
+
+.sf-menu li:hover,
+.sf-menu li.sfHover {
+	/* only transition out, not in */
+	-webkit-transition: none;
+	transition: none;
+}
+.sf-menu li a:hover{ color:#E8AD25; }
+.sf-menu li a.active{ color:#E8AD25; }
+.sf-menu ul li{ padding:10px 0 !important; margin:0; border-bottom:1px solid rgba(255,255,255,.15); }
+.sf-menu ul li:last-child{ border:none; }
+.sf-menu ul li a{ color:#fff; padding:0 10px 0 24px; background:url(../images/nav-arrow-icon.png) no-repeat 0 3px; }
+
+
+
+/************************************************************************************
+MOBILE
+*************************************************************************************/
+
+
+@media screen and (max-width:1199px) {
+	.sf-menu > li{ margin:0 6px; }
+	.sf-menu > li:last-child{ margin:0; }
+    
+    .sf-menu > li { padding: 0 0 0 0; }
+}
+
+@media screen and (max-width:991px) {
+
+ 	.sf-menu > li{ width:100%; padding:2px 0 2px 0 ; }
+	.sf-menu > li > a { font-family: 'SF UI Display light'; font-size:15px; color:#fff; line-height:17px; font-weight:300;  }
+    .sf-menu > li > a > img { display: none; }
+	
+/* nav-wrap */
+        #nav-wrap {
+                position: relative;
+				border:none;
+				box-shadow:none;
+				border-radius:3px;
+				bottom:0px;
+        }
+ 
+/* menu icon */
+        #menu-icon {
+			background:url(../images/menu-icon.png) 50% 50% no-repeat; display:block; width:31px; height:31px; text-indent:-9999999em; padding:0; overflow:hidden; cursor:pointer; z-index:1000; position:absolute; top:25px; right:0px;  
+        }
+		
+.sf-menu > li:hover,
+.sf-menu > li.sfHover {}
+        #menu-icon.active {
+                background:url(../images/menu-close.png) 50% 50% no-repeat;
+        }
+ 
+/* main nav */
+		.sf-menu ul{display:block!important; visibility:visible!important; background:#2c58a8;}
+        .sf-menu {
+                clear: both;
+                position:absolute;
+                top:82px;
+                width:100%;
+                z-index: 10000;
+                padding: 0 0 0 0;
+                background:#17a085;        
+                display: none; /* visibility will be toggled with jquery */
+				font-family: 'SF UI Display light';
+				font-weight: 300;
+				left:0;
+                border-radius: 0 0 3px 3px;
+                -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+                -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+                box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
+                border-bottom: 2px solid #dcdcdc; 
+        }
+        .sf-menu li {
+                clear: both;
+                float: none;
+                margin: 2px 0;
+				background:none;
+				border:none;
+				border-bottom: 1px solid #0c2338;
+        }
+        .sf-menu li a span { padding-top: 0; }
+		.sf-menu li ul{ background:none; box-shadow:none;}
+		.sf-menu li a:hover{ color: #f22f59; margin-left: 5px;  }
+		.sf-menu li:hover{ box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12),0 3px 5px -1px rgba(0,0,0,0.3); -webkit-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12),0 3px 5px -1px rgba(0,0,0,0.3); -moz-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12),0 3px 5px -1px rgba(0,0,0,0.3); box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12),0 3px 5px -1px rgba(0,0,0,0.3); -o-box-shadow: 0 6px 10px 0 rgba(0,0,0,0.14),0 1px 18px 0 rgba(0,0,0,0.12),0 3px 5px -1px rgba(0,0,0,0.3); } /* optional */
+	
+		.sf-menu li ul li a{ background:none !important; }
+		.sf-menu li ul li a:hover{ background:none; text-decoration:underline;}
+        .sf-menu a,
+        .sf-menu ul a {
+                font: inherit;
+                background: none;
+				transition: all 300ms ease-in-out;
+				margin:0 0 1px 0;
+				padding:6px 5% !important;
+                display: block;
+				width:100%;
+                color: #fff;
+                border: none;
+				font-size:16px;
+				line-height:18px;
+				height:inherit;
+				font-family: 'SF UI Display light';
+				font-weight:300;
+				text-align: left;
+				
+        }
+		.sf-menu a:hover{ text-decoration:none; }
+        .sf-menu a:hover,
+        .sf-menu > li > a:hover{ text-decoration:none; }
+		.sf-menu a.active {
+               background: none;
+               color: #fff;
+               
+        }
+ 
+        /* dropdown */
+        .sf-menu ul {
+                width: auto;
+                position: static;
+                display: block;
+                border: none;
+                background: inherit;
+				
+        }
+        .sf-menu ul li {
+                margin: 3px 0 3px 15px;
+        }
+		.sf-menu li ul li a{ background:none; font-size:15px; line-height:17px; padding:3px 10px; } 
+}
+
+
+
+
