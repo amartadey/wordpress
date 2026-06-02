@@ -60,7 +60,7 @@ jobs:
       - name: Install classic-editor
         if: steps.check.outputs.exists == 'false'
         run: |
-          URL=$(curl -fsSL \
+          URL=$(curl -fsSLg \
             "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=classic-editor" \
             | python3 -c "import sys, json; print(json.load(sys.stdin)['download_link'])")
           curl -fsSL "$URL" -o classic-editor.zip
@@ -69,7 +69,7 @@ jobs:
       - name: Install secure-custom-fields
         if: steps.check.outputs.exists == 'false'
         run: |
-          URL=$(curl -fsSL \
+          URL=$(curl -fsSLg \
             "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=secure-custom-fields" \
             | python3 -c "import sys, json; print(json.load(sys.stdin)['download_link'])")
           curl -fsSL "$URL" -o secure-custom-fields.zip
