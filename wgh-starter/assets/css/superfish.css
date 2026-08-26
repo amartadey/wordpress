@@ -15,10 +15,9 @@
 	z-index: 999;
 }
 .sf-menu > li {
-    background-image: url('../images/sfmenu-next-icon.png'); background-repeat: no-repeat; background-position: 81% 0;
 	float: left;
 	display:block;
-	padding:0 62px 0 0;
+	padding:0 20px 0 0;
 	margin:0;
     border-right: none;
     letter-spacing: 0.05em;
