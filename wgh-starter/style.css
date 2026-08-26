@@ -3,13 +3,65 @@ Theme Name: WGH Starter
 Theme URI: https://webgraphicshub.com/
 Author: Web Graphics Hub
 Author URI: https://webgraphicshub.com/
-Description: WGH Starter is a blank scaffold WordPress theme by Web Graphics Hub — used as the base for all new site builds. Includes Bootstrap, Font Awesome, Owl Carousel, Superfish, and Responsive Slides.
-Version: 1.0.0
-Requires at least: 5.6
-Tested up to: 6.7
+Description: WGH Starter is a blank scaffold WordPress theme by Web Graphics Hub — used as the base for all new site builds. Bundles Bootstrap, Font Awesome, Owl Carousel, Superfish and Responsive Slides. Write project styles in this file.
+Version: 1.1.0
+Requires at least: 6.0
+Tested up to: 6.9
 Requires PHP: 7.4
 License: Private
 License URI: Private
 Text Domain: wgh-starter
-Tags: web-graphics-hub, custom-theme, custom-logo, custom-menu, featured-images, threaded-comments
+Tags: custom-logo, custom-menu, featured-images, threaded-comments
 */
+
+/* ── BASE ─────────────────────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+img,
+svg,
+video,
+iframe { max-width: 100%; height: auto; }
+
+/* ── ACCESSIBILITY HELPERS ────────────────────────────────────────────────── */
+
+.screen-reader-text {
+	position: absolute !important;
+	width: 1px; height: 1px;
+	margin: -1px; padding: 0; border: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	word-wrap: normal !important;
+}
+
+.skip-link {
+	position: absolute;
+	left: -9999px;
+	top: 0;
+	z-index: 100000;
+	padding: 10px 16px;
+	background: #fff;
+	color: #000;
+}
+.skip-link:focus { left: 0; }
+
+/* ── HEADER / NAV ─────────────────────────────────────────────────────────── */
+
+.menu-toggle {
+	display: none;
+	border: 0;
+	background: none;
+	padding: 10px;
+	font-size: 20px;
+	cursor: pointer;
+}
+
+@media (max-width: 991px) {
+	.menu-toggle { display: inline-block; }
+	#navigation .sf-menu { display: none; }
+	#navigation.is-open .sf-menu { display: block; }
+	.sf-menu > li { float: none; }
+}
