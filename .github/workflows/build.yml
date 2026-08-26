@@ -4,9 +4,19 @@ on:
   schedule:
     - cron: '0 6 * * *'
   workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - 'wgh-starter/**'
+      - 'mu-plugins/**'
+      - '.github/workflows/build.yml'
 
 permissions:
   contents: write
+
+env:
+  # Pin to a commit SHA or tag of amartadey/Some-Tools. TODO: replace "main".
+  AAM_REF: main
 
 jobs:
   build:
@@ -22,97 +32,131 @@ jobs:
           unzip -q wordpress-latest.zip
 
       - name: Read WordPress version
-        id: wp_version
-        run: |
-          VERSION=$(grep "\$wp_version = " wordpress/wp-includes/version.php \
-            | sed "s/.*'\(.*\)'.*/\1/")
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Detected WordPress $VERSION"
-
-      - name: Check if release already exists
-        id: check
+        id: meta
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="v${{ steps.wp_version.outputs.version }}"
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+          VERSION=$(php -r "include 'wordpress/wp-includes/version.php'; echo \$wp_version;")
+          TAG="v$VERSION"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "Release $TAG already exists — skipping."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "Release $TAG not found — proceeding with build."
           fi
+          echo "Building WordPress $VERSION ($TAG) — always rebuilt so core + plugins stay current."
 
-      - name: Remove default plugins and themes
-        if: steps.check.outputs.exists == 'false'
+      - name: Strip default plugins, themes and version-disclosing files
         run: |
-          # Remove all plugin folders and loose plugin files (keep index.php)
           find wordpress/wp-content/plugins -mindepth 1 -maxdepth 1 ! -name 'index.php' -exec rm -rf {} +
-          # Remove everything from themes, then add a blank index.php
-          find wordpress/wp-content/themes -mindepth 1 -maxdepth 1 -exec rm -rf {} +
+          find wordpress/wp-content/themes  -mindepth 1 -maxdepth 1 -exec rm -rf {} +
           printf '<?php // Silence is golden.\n' > wordpress/wp-content/themes/index.php
+          rm -f wordpress/readme.html
 
-      - name: Add wgh-starter theme
-        if: steps.check.outputs.exists == 'false'
+      - name: Add wgh-starter theme and mu-plugin
         run: |
-          # Copy PHP theme files from repo
           cp -r wgh-starter wordpress/wp-content/themes/wgh-starter
-          # Copy static assets from "wp master" into the theme
-          cp -r "wp master/css"          wordpress/wp-content/themes/wgh-starter/css
-          cp -r "wp master/js"           wordpress/wp-content/themes/wgh-starter/js
-          cp -r "wp master/font-awesome" wordpress/wp-content/themes/wgh-starter/font-awesome
-          cp    "wp master/screenshot.png" wordpress/wp-content/themes/wgh-starter/screenshot.png
-
-      - name: Add auto-setup MU plugin
-        if: steps.check.outputs.exists == 'false'
-        run: |
           mkdir -p wordpress/wp-content/mu-plugins
           cp mu-plugins/wgh-auto-setup.php wordpress/wp-content/mu-plugins/wgh-auto-setup.php
 
-      - name: Install aam-wp-migration
-        if: steps.check.outputs.exists == 'false'
+      - name: Install bundled plugins (fresh every build)
         run: |
+          dl_wporg () {
+            local slug="$1"
+            local url
+            url=$(curl -fsSLg "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=$slug" \
+              | jq -r '.download_link')
+            [ -n "$url" ] && [ "$url" != "null" ] || { echo "No download link for $slug" >&2; exit 1; }
+            curl -fsSL "$url" -o "$slug.zip"
+            unzip -q "$slug.zip" -d wordpress/wp-content/plugins/
+          }
+
+          dl_wporg classic-editor
+          dl_wporg secure-custom-fields
+
           curl -fsSL \
-            "https://raw.githubusercontent.com/amartadey/Some-Tools/main/php-tools/aam-wp-migration.zip" \
+            "https://raw.githubusercontent.com/amartadey/Some-Tools/${AAM_REF}/php-tools/aam-wp-migration.zip" \
             -o aam-wp-migration.zip
           unzip -q aam-wp-migration.zip -d wordpress/wp-content/plugins/
 
-      - name: Install classic-editor
-        if: steps.check.outputs.exists == 'false'
+      - name: Record bundled versions
+        id: versions
         run: |
-          URL=$(curl -fsSLg \
-            "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=classic-editor" \
-            | python3 -c "import sys, json; print(json.load(sys.stdin)['download_link'])")
-          curl -fsSL "$URL" -o classic-editor.zip
-          unzip -q classic-editor.zip -d wordpress/wp-content/plugins/
+          get_ver () { grep -m1 -ioP 'Version:\s*\K[0-9][0-9.\-a-z]*' "$1" 2>/dev/null || echo '?'; }
+          CE=$(get_ver wordpress/wp-content/plugins/classic-editor/classic-editor.php)
+          SCF=$(get_ver wordpress/wp-content/plugins/secure-custom-fields/secure-custom-fields.php)
+          echo "line=classic-editor $CE · secure-custom-fields $SCF" >> "$GITHUB_OUTPUT"
 
-      - name: Install secure-custom-fields
-        if: steps.check.outputs.exists == 'false'
+      - name: Add opinionated .htaccess (caching + basic hardening)
         run: |
-          URL=$(curl -fsSLg \
-            "https://api.wordpress.org/plugins/info/1.2/?action=plugin_information&request[slug]=secure-custom-fields" \
-            | python3 -c "import sys, json; print(json.load(sys.stdin)['download_link'])")
-          curl -fsSL "$URL" -o secure-custom-fields.zip
-          unzip -q secure-custom-fields.zip -d wordpress/wp-content/plugins/
+          cat > wordpress/.htaccess <<'HTACCESS'
+          # ── WGH: static asset caching ────────────────────────────────────────
+          <IfModule mod_deflate.c>
+            AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json image/svg+xml
+          </IfModule>
+          <IfModule mod_expires.c>
+            ExpiresActive On
+            ExpiresByType text/css               "access plus 1 year"
+            ExpiresByType application/javascript  "access plus 1 year"
+            ExpiresByType image/jpeg             "access plus 1 year"
+            ExpiresByType image/png              "access plus 1 year"
+            ExpiresByType image/webp             "access plus 1 year"
+            ExpiresByType image/svg+xml          "access plus 1 year"
+            ExpiresByType font/woff2             "access plus 1 year"
+            ExpiresByType application/font-woff2  "access plus 1 year"
+          </IfModule>
+          <IfModule mod_headers.c>
+            <FilesMatch "\.(css|js|woff2|jpg|jpeg|png|webp|svg)$">
+              Header set Cache-Control "public, max-age=31536000, immutable"
+            </FilesMatch>
+            Header set X-Content-Type-Options "nosniff"
+            Header always set X-Frame-Options "SAMEORIGIN"
+            Header always set Referrer-Policy "strict-origin-when-cross-origin"
+          </IfModule>
+
+          # ── WGH: block access to sensitive files ─────────────────────────────
+          <FilesMatch "^(wp-config\.php|\.htaccess|readme\.html|license\.txt|xmlrpc\.php)$">
+            Require all denied
+          </FilesMatch>
+
+          # BEGIN WordPress
+          <IfModule mod_rewrite.c>
+          RewriteEngine On
+          RewriteBase /
+          RewriteRule ^index\.php$ - [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule . /index.php [L]
+          </IfModule>
+          # END WordPress
+          HTACCESS
 
       - name: Create release zips
-        if: steps.check.outputs.exists == 'false'
         id: zip
         run: |
-          ZIP="wordpress-custom-${{ steps.wp_version.outputs.version }}.zip"
-          (cd wordpress && zip -r -q "../$ZIP" .)
+          ZIP="wordpress-custom-${{ steps.meta.outputs.version }}.zip"
+          ( cd wordpress && zip -r -q "../$ZIP" . )
           cp "$ZIP" wordpress-custom-latest.zip
           echo "name=$ZIP" >> "$GITHUB_OUTPUT"
           echo "Created $ZIP ($(du -sh "$ZIP" | cut -f1))"
 
-      - name: Create GitHub Release and upload assets
-        if: steps.check.outputs.exists == 'false'
+      - name: Publish / refresh GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "v${{ steps.wp_version.outputs.version }}" \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "WordPress Custom v${{ steps.wp_version.outputs.version }}" \
-            --notes "Custom WordPress v${{ steps.wp_version.outputs.version }} — theme: wgh-starter (auto-activated on first boot). Plugins: aam-wp-migration, classic-editor, secure-custom-fields (all auto-activated on first boot). Default themes and bundled plugins removed." \
-            "${{ steps.zip.outputs.name }}" \
-            "wordpress-custom-latest.zip"
+          TAG="${{ steps.meta.outputs.tag }}"
+          ZIP="${{ steps.zip.outputs.name }}"
+          NOTES="WordPress ${{ steps.meta.outputs.version }} · rebuilt $(date -u '+%Y-%m-%d %H:%M UTC')
+          Plugins: ${{ steps.versions.outputs.line }} · aam-wp-migration (${AAM_REF})
+          Theme wgh-starter + all plugins auto-activated on first boot. Default themes/plugins and readme.html removed. Ships an opinionated .htaccess."
+
+          if [ "${{ steps.meta.outputs.exists }}" = "true" ]; then
+            gh release upload "$TAG" "$ZIP" wordpress-custom-latest.zip --repo "$GITHUB_REPOSITORY" --clobber
+            gh release edit   "$TAG" --repo "$GITHUB_REPOSITORY" --latest --notes "$NOTES"
+          else
+            gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --latest \
+              --title "WordPress Custom $TAG" --notes "$NOTES" \
+              "$ZIP" wordpress-custom-latest.zip
+          fi
