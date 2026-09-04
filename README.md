@@ -5,7 +5,7 @@ Automated GitHub Actions workflow that builds a clean, opinionated WordPress zip
 ## What's included
 
 **Plugins**
-- [aam-wp-migration](https://github.com/amartadey/Some-Tools) — migration helper
+- [aam-wp-migration](https://github.com/amartadey/AAM-WP-Migration) — migration helper (pulled from its latest GitHub release)
 - [classic-editor](https://wordpress.org/plugins/classic-editor/) — restores the classic editor
 - [secure-custom-fields](https://wordpress.org/plugins/secure-custom-fields/) — custom fields (community fork of ACF)
 
@@ -56,4 +56,4 @@ mu-plugins/wgh-auto-setup.php  ← first-boot setup (theme + plugins + cleanup +
 README.md
 ```
 
-WordPress core and the three plugins are downloaded fresh each run from official sources.
+WordPress core and `classic-editor` / `secure-custom-fields` come fresh each run from the wordpress.org API; `aam-wp-migration` comes from its own repo's latest GitHub release.

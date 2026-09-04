@@ -14,10 +14,6 @@ on:
 permissions:
   contents: write
 
-env:
-  # Pin to a commit SHA or tag of amartadey/Some-Tools. TODO: replace "main".
-  AAM_REF: main
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -77,17 +73,18 @@ jobs:
           dl_wporg secure-custom-fields
 
           curl -fsSL \
-            "https://raw.githubusercontent.com/amartadey/Some-Tools/${AAM_REF}/php-tools/aam-wp-migration.zip" \
+            "https://github.com/amartadey/AAM-WP-Migration/releases/latest/download/aam-wp-migration.zip" \
             -o aam-wp-migration.zip
           unzip -q aam-wp-migration.zip -d wordpress/wp-content/plugins/
 
       - name: Record bundled versions
         id: versions
         run: |
-          get_ver () { grep -m1 -ioP 'Version:\s*\K[0-9][0-9.\-a-z]*' "$1" 2>/dev/null || echo '?'; }
+          get_ver () { grep -m1 -hoiP 'Version:\s*\K[0-9][0-9.\-a-z]*' $1 2>/dev/null | head -n1 || echo '?'; }
           CE=$(get_ver wordpress/wp-content/plugins/classic-editor/classic-editor.php)
           SCF=$(get_ver wordpress/wp-content/plugins/secure-custom-fields/secure-custom-fields.php)
-          echo "line=classic-editor $CE · secure-custom-fields $SCF" >> "$GITHUB_OUTPUT"
+          AAM=$(get_ver 'wordpress/wp-content/plugins/aam-wp-migration/*.php')
+          echo "line=classic-editor $CE · secure-custom-fields $SCF · aam-wp-migration $AAM" >> "$GITHUB_OUTPUT"
 
       - name: Add opinionated .htaccess (caching + basic hardening)
         run: |
@@ -149,7 +146,7 @@ jobs:
           TAG="${{ steps.meta.outputs.tag }}"
           ZIP="${{ steps.zip.outputs.name }}"
           NOTES="WordPress ${{ steps.meta.outputs.version }} · rebuilt $(date -u '+%Y-%m-%d %H:%M UTC')
-          Plugins: ${{ steps.versions.outputs.line }} · aam-wp-migration (${AAM_REF})
+          Plugins: ${{ steps.versions.outputs.line }}
           Theme wgh-starter + all plugins auto-activated on first boot. Default themes/plugins and readme.html removed. Ships an opinionated .htaccess."
 
           if [ "${{ steps.meta.outputs.exists }}" = "true" ]; then
