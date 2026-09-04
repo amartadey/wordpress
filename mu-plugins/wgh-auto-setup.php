@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WGH Auto Setup
  * Description: First-run setup: activates the wgh-starter theme and bundled plugins (running their activation hooks), removes the default Hello World post and Sample Page, closes comments site-wide, and generates a per-site theme screenshot. Self-removes after completion.
- * Version: 1.1.0
+ * Version: 1.1.1
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -39,8 +39,12 @@ function wgh_auto_setup() {
 	}
 
 	// ── 2. Activate bundled plugins (runs their activation hooks) ────────────
-	if ( ! function_exists( 'activate_plugins' ) ) {
-		require_once ABSPATH . 'wp-admin/includes/plugin.php';
+	// Load every admin include a plugin activation hook may touch. This runs on
+	// a front-end request where wp-admin is not bootstrapped, so misc.php
+	// (insert_with_markers) and file.php (WP_Filesystem) are otherwise missing —
+	// aam-wp-migration's activation hook fatals without them.
+	foreach ( [ 'plugin.php', 'misc.php', 'file.php', 'template.php' ] as $wgh_inc ) {
+		require_once ABSPATH . 'wp-admin/includes/' . $wgh_inc;
 	}
 
 	$slugs = [ 'classic-editor', 'secure-custom-fields', 'aam-wp-migration' ];
@@ -65,7 +69,14 @@ function wgh_auto_setup() {
 	}
 
 	if ( $to_activate ) {
-		activate_plugins( $to_activate ); // fires activation hooks
+		// A broken activation hook must not 500 the whole site on every request
+		// (mu-plugins load everywhere). Log and carry on so setup still completes
+		// and this file self-deletes.
+		try {
+			activate_plugins( $to_activate ); // fires activation hooks
+		} catch ( \Throwable $e ) {
+			error_log( 'WGH Auto Setup: plugin activation error — ' . $e->getMessage() );
+		}
 	}
 
 	// ── 3. Remove default content ───────────────────────────────────────────
